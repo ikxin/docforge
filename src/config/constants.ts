@@ -1,9 +1,9 @@
 export const DEFAULT_CHUNKED = true
-export const DEFAULT_QUEUE = 30
-export const DEFAULT_RETRIES = 2
-export const DEFAULT_MAX_CHUNK_SIZE = 10_000
+export const DEFAULT_QUEUE = 20
+export const DEFAULT_RETRIES = 1
+export const DEFAULT_MAX_CHUNK_SIZE = 5_000
 export const USER_AGENT =
-  'Codex Desktop/0.147.0-alpha.6.5 (Mac OS 26.5.2; arm64) unknown (Codex Desktop; 26.803.61601)'
+  'Codex Desktop/0.158.0-alpha.2.1 (Mac OS 27.0.0; arm64) unknown (Codex Desktop; 26.924.22138)'
 
 export const SYSTEM_PROMPT = `将以下 Markdown 格式的文档内容翻译成简体中文，必须严格遵守以下规则：
 - 保持原文的 Markdown 或 MDX 文档内容的格式和结构不变

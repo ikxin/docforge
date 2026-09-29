@@ -47,6 +47,9 @@ export async function getOutputText(
     model,
     instructions: system,
     input: prompt,
+    reasoning: {
+      effort: 'low',
+    },
   })
 
   const content = cleanTranslationOutput(response.output_text)

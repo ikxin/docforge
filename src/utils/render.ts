@@ -73,9 +73,9 @@ function formatDecimal(value: number, digits = 1): string {
   return value.toFixed(digits)
 }
 
-function formatCharacterCount(size: number): string {
-  if (!Number.isFinite(size) || size <= 0) return '0 个字符'
-  return `${Math.round(size).toLocaleString('zh-CN')} 个字符`
+function formatTokenCount(size: number): string {
+  if (!Number.isFinite(size) || size <= 0) return '0 tokens'
+  return `${Math.round(size).toLocaleString('zh-CN')} tokens`
 }
 
 function formatTokenRate(tokens: number, elapsedMs: number): string {
@@ -90,8 +90,8 @@ function chunkSizeSummary(sizes: number[]): string {
   const average = total / sizes.length
   const max = Math.max(...sizes)
 
-  if (sizes.length === 1) return formatCharacterCount(max)
-  return `均 ${formatCharacterCount(average)} · 最大 ${formatCharacterCount(max)}`
+  if (sizes.length === 1) return formatTokenCount(max)
+  return `均 ${formatTokenCount(average)} · 最大 ${formatTokenCount(max)}`
 }
 
 function maxChunkSize(files: FileProgress[]): number {
@@ -183,7 +183,7 @@ export function createReporter(
     const largestChunkSize = maxChunkSize(knownFiles)
     const chunkSizeLabel =
       largestChunkSize > 0
-        ? `最大 ${formatCharacterCount(largestChunkSize)}`
+        ? `最大 ${formatTokenCount(largestChunkSize)}`
         : '等待解析'
 
     lines.push(
@@ -220,7 +220,7 @@ export function createReporter(
             : '无需分块'
         const activeChunkSize =
           f.activeChunkSizes.length > 0
-            ? `当前 ${formatCharacterCount(Math.max(...f.activeChunkSizes))}`
+            ? `当前 ${formatTokenCount(Math.max(...f.activeChunkSizes))}`
             : chunkSizeSummary(f.chunkSizes)
         lines.push(
           `  ${chalk.cyan(spinner)} ${chalk.white(name.padEnd(nameWidth))} ${chunkBar} ${chalk.bold.yellow(`${Math.round(chunkPercent * 100)}%`)} ${chalk.dim(`${chunkLabel} · ${activeChunkSize} · ${elapsedForFile}`)}`,

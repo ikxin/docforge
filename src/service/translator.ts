@@ -2,7 +2,11 @@ import { readFileSync, writeFileSync } from 'fs'
 import type OpenAI from 'openai'
 import pLimit from 'p-limit'
 import { DEFAULT_CHUNKED, DEFAULT_RETRIES, SYSTEM_PROMPT } from '../config/constants.ts'
-import { translateByChunks, type ChunkInfo } from '../utils/markdown.ts'
+import {
+  countTokens,
+  translateByChunks,
+  type ChunkInfo,
+} from '../utils/markdown.ts'
 import type { ProgressCallbacks } from '../utils/render.ts'
 import { getOutputText } from './llm.ts'
 
@@ -77,7 +81,7 @@ export async function translateFiles(
               callbacks?.onChunkComplete(file, chunk, outputTokens),
           })
         } else {
-          const chunk: ChunkInfo = { index: 0, size: content.length }
+          const chunk: ChunkInfo = { index: 0, size: countTokens(content) }
           hasStarted = true
           callbacks?.onFileStart(file, [chunk])
           callbacks?.onChunkStart(file, chunk)

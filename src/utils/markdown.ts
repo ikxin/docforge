@@ -40,6 +40,10 @@ export interface ChunkTranslationResult {
   outputTokens: number
 }
 
+export function countTokens(text: string): number {
+  return encode(text, TOKENIZER_OPTIONS).length
+}
+
 function createChunk(
   start: number,
   end: number,
@@ -260,7 +264,9 @@ export async function translateByChunks(
   const translatableChunks = chunks.filter((c) => c.translatable)
   const chunkInfos = translatableChunks.map((chunk, index) => ({
     index,
-    size: chunk.end - chunk.start,
+    size: countTokens(
+      splitBoundaryWhitespace(content.slice(chunk.start, chunk.end)).body,
+    ),
   }))
   const chunkInfoByChunk = new Map<Chunk, ChunkInfo>()
   translatableChunks.forEach((chunk, index) => {
